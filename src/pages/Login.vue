@@ -10,7 +10,7 @@
               <form @submit.prevent="doLocalLogin">
                 <div class="field">
                   <div class="control">
-                    <input class="input is-medium" type="email" placeholder="이메일" autofocus="" v-model="username">
+                    <input class="input is-medium" type="email" placeholder="아이디" autofocus="" v-model="username">
                   </div>
                 </div>
 
