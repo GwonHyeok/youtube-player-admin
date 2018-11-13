@@ -56,6 +56,15 @@
     name: "Songs",
     components: { Pagination },
     async created() {
+      const token = sessionStorage.getItem('token');
+
+      // 로그인 체크
+      if (token == null) {
+        alert('로그인을 해주세요');
+        this.$router.push('/login');
+        return
+      }
+
       await this.fetchData(this.$route.query.page || 1);
     },
     data() {
