@@ -44,7 +44,7 @@
 
       </div>
     </div>
-    <pagination :paging="meta.paging"></pagination>
+    <pagination :paging="meta.pagination" v-on:page="onChangePage"></pagination>
   </section>
 </template>
 
@@ -56,15 +56,20 @@
     name: "Songs",
     components: { Pagination },
     async created() {
-      await this.fetchData()
+      await this.fetchData(this.$route.query.page || 1);
     },
     data() {
       return { songs: [], meta: {} }
     },
     methods: {
-      async fetchData() {
-        const { data } = await apiClient.get('/songs');
-        this.songs = data.data
+      async fetchData(page = 1) {
+        const { data } = await apiClient.get('/songs', { params: { page } });
+        this.songs = data.data;
+        this.meta = data.meta;
+      },
+      async onChangePage(page) {
+        this.$router.replace({ query: { page } });
+        await this.fetchData(page)
       },
       onClickSong(song) {
         this.$router.push(`/songs/${song.id}`)
