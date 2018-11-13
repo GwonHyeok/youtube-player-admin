@@ -145,6 +145,31 @@
         this.song = data.data
       },
       async submitSong() {
+        // 음악 정보 업데이트 비디오 아이디 확인해서 링크 형식일때 비디오 아이디로 치환
+        if (this.song.videoId.includes('http://') || this.song.videoId.includes('https://')) {
+          const search = this.song.videoId.substring(this.song.videoId.indexOf("?"));
+          const assoc = {};
+          const decode = function(s) {
+            return decodeURIComponent(s.replace(/\+/g, " "));
+          };
+          const queryString = search.substring(1);
+          const keyValues = queryString.split('&');
+
+          for (let i in keyValues) {
+            let key = keyValues[i].split('=');
+            if (key.length > 1) {
+              assoc[decode(key[0])] = decode(key[1]);
+            }
+          }
+
+          if (!assoc.v) {
+            alert('지원하지 않는 유투브 주소 형식입니다');
+            return;
+          }
+
+          this.song.videoId = assoc.v;
+        }
+
         if (this.isEdit) {
           await this.updateSong()
         } else {
