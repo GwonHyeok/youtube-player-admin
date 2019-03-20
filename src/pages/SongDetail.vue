@@ -25,7 +25,7 @@
           <div class="field">
             <label class="label">비디오 아이디</label>
             <div class="control">
-              <input class="input" type="text" v-model="song.videoId" placeholder="비디오 아이디" v-bind:disabled="isEdit">
+              <input class="input" type="text" v-model="song.videoId" placeholder="비디오 아이디">
             </div>
           </div>
 
